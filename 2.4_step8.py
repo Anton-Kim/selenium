@@ -21,12 +21,13 @@ try:
     WebDriverWait(browser, 12).until(EC.text_to_be_present_in_element((By.ID, "price"), '100'))
     browser.find_element(By.ID, 'book').click()
 
-    # browser.find_element(By.CSS_SELECTOR, '.trollface').click()
-    # browser.switch_to.window(browser.window_handles[1])
-
     x = browser.find_element(By.ID, 'input_value').text
     browser.find_element(By.ID, 'answer').send_keys(calc(x))
     browser.find_element(By.ID, 'solve').click()
+
+
+    # browser.find_element(By.CSS_SELECTOR, '.trollface').click()
+    # browser.switch_to.window(browser.window_handles[1])
 
     # browser.switch_to.alert.accept()
 
