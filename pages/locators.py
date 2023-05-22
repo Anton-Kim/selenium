@@ -12,4 +12,4 @@ class LoginPageLocators:
 
 class ProductPageLocators:
     PRODUCT_LINK = (By.CLASS_NAME, 'btn-add-to-basket')
-    SUCCESS_MESSAGE = (By.CLASS_NAME, 'selector')
+    SUCCESS_MESSAGE = (By.CSS_SELECTOR, '#messages div:nth-child(1) strong')
