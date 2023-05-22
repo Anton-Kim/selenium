@@ -19,8 +19,8 @@ class TestStepik:
         browser.get(link)
 
         browser.find_element(By.ID, 'ember33').click()
-        browser.find_element(By.ID, 'id_login_email').send_keys('mail@mail.ru')
-        browser.find_element(By.ID, 'id_login_password').send_keys('pass')
+        browser.find_element(By.ID, 'id_login_email').send_keys('obsos32@gmail.com')
+        browser.find_element(By.ID, 'id_login_password').send_keys('Qwedcxzas88')
         browser.find_element(By.CSS_SELECTOR, '[class="sign-form__btn button_with-loader "]').click()
 
         answer = math.log(int(time.time()))
