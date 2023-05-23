@@ -2,7 +2,7 @@ import math
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import NoSuchElementException, TimeoutException
+from selenium.common.exceptions import NoSuchElementException, TimeoutException, NoAlertPresentException
 from .locators import BasePageLocators
 
 
@@ -21,8 +21,11 @@ class BasePage:
     def go_to_login_page(self):
         login_link = self.browser.find_element(*BasePageLocators.LOGIN_LINK)
         login_link.click()
-        # alert = self.browser.switch_to.alert
-        # alert.accept()
+
+    def should_be_authorized_user(self):
+        assert self.is_element_present(
+            *BasePageLocators.USER_ICON), "User icon is not presented," \
+                                          " probably unauthorised user"
 
     def go_to_basket(self):
         basket_link = self.browser.find_element(By.CSS_SELECTOR, '.btn-group > a')
@@ -51,28 +54,16 @@ class BasePage:
             return False
         return True
 
-    # def solve_quiz_and_get_code(self):
-    #     alert = self.browser.switch_to.alert
-    #     x = alert.text.split(" ")[2]
-    #     answer = str(math.log(abs((12 * math.sin(float(x))))))
-    #     alert.send_keys(answer)
-    #     alert.accept()
-    #     try:
-    #         alert = self.browser.switch_to.alert
-    #         alert_text = alert.text
-    #         print(f"Your code: {alert_text}")
-    #         alert.accept()
-    #     except NoAlertPresentException:
-    #         print("No second alert presented")
-
     def solve_quiz_and_get_code(self):
         alert = self.browser.switch_to.alert
         x = alert.text.split(" ")[2]
         answer = str(math.log(abs((12 * math.sin(float(x))))))
         alert.send_keys(answer)
         alert.accept()
-        book_name_message = self.browser.find_element(By.CSS_SELECTOR, '#messages div:nth-child(1) strong').text
-        book_price_message = self.browser.find_element(By.CSS_SELECTOR, '#messages div:nth-child(3) strong').text
-        book_name_cart = self.browser.find_element(By.CSS_SELECTOR, '.product_main h1').text
-        book_price_cart = self.browser.find_element(By.CSS_SELECTOR, '.product_main p:nth-child(2)').text
-        assert book_name_message == book_name_cart and book_price_message == book_price_cart, 'Some bug'
+        try:
+            alert = self.browser.switch_to.alert
+            alert_text = alert.text
+            print(f"Your code: {alert_text}")
+            alert.accept()
+        except NoAlertPresentException:
+            print("No second alert presented")
